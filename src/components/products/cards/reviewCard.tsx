@@ -1,24 +1,33 @@
-import React from 'react'
-import Image from 'next/image';
+"use client";
+import React from "react";
+import Image from "next/image";
 import { Star } from "lucide-react";
-import Check from '@/../public/images/check.png'
+import Check from "@/../public/images/check.png";
 
 interface ReviewCardProps {
   customerName: string;
   comment: string; // e.g. 120
   rating: number; // e.g. 4.5
+  className?: string;
 }
 
-function ReviewCard({customerName, rating, comment}: ReviewCardProps) {
+function ReviewCard({
+  customerName,
+  rating,
+  comment,
+  className,
+}: ReviewCardProps) {
   return (
-    <div className="w-full max-w-sm sm:max-w-md h-auto min-h-[200px] sm:min-h-[240px] p-4 sm:p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 my-4 sm:my-6 lg:my-10">
+    <div
+      className={`w-full max-w-sm sm:max-w-md h-auto min-h-[200px] sm:min-h-[240px] p-4 sm:p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 my-4 sm:my-6 lg:my-10 ${className}`}
+    >
       {/* Rating */}
       <div className="flex items-center mt-1 sm:mt-2">
         <div className="flex items-center">
           {Array.from({ length: 5 }, (_, i) => {
             const fullStars = Math.floor(rating);
             const isHalf = i === fullStars && rating % 1 >= 0.5;
-  
+
             return (
               <Star
                 key={i}
@@ -50,13 +59,15 @@ function ReviewCard({customerName, rating, comment}: ReviewCardProps) {
 
       {/* Customer Name and Verification */}
       <div className="flex items-center space-x-2 mt-3 sm:mt-4">
-        <h3 className="text-lg sm:text-xl font-semibold text-gray-800">{customerName}</h3>
-        <Image 
-          src={Check} 
-          alt={'Verified Customer'} 
-          width={20} 
-          height={16} 
-          className='mt-1 sm:mt-2'
+        <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
+          {customerName}
+        </h3>
+        <Image
+          src={Check}
+          alt={"Verified Customer"}
+          width={20}
+          height={16}
+          className="mt-1 sm:mt-2"
         />
       </div>
 
@@ -68,4 +79,4 @@ function ReviewCard({customerName, rating, comment}: ReviewCardProps) {
   );
 }
 
-export default ReviewCard
+export default ReviewCard;

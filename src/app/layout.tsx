@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Navbar } from "@/components/Nav/page";
+import Footer from '@/components/footer/page'
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,7 +36,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="max-w-[1440px] mx-auto overflow-x-hidden">{children}</div>
+          <div className="max-w-[1440px] mx-auto overflow-x-hidden">
+          <Navbar />
+            {children}
+            <Footer/>
+            </div>
         </ThemeProvider>
       </body>
     </html>
