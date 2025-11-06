@@ -55,12 +55,12 @@ export default function ProductDetail() {
   };
   const categoryParam = searchParams.get("category");
   const currentProduct = product || fallbackProduct;
-  const category = categoryParam
-    ? categoryParam
-        .split("-")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ")
-    : "All";
+  // const category = categoryParam
+  //   ? categoryParam
+  //       .split("-")
+  //       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  //       .join(" ")
+  //   : "All";
   const filteredProducts = categoryParam
     ? getProductsByCategory(categoryParam)
     : products;

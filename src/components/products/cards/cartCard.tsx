@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import Image from 'next/image';
 
@@ -17,7 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   size,
   color,
   price,
-  quantity,
+  // quantity,
 //   onQuantityChange,
 }) => {
 //   const handleDecrement = () => {
