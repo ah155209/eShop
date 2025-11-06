@@ -1,62 +1,77 @@
-"use client";
-import React from 'react'
-import Link from "next/link";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import Card from '@/components/products/cards/cartCard'
-function page() {
-//  const handleQuantityChange = ( )=> {
-//    // Handle quantity change logic here
-//  }
+"use client"; // Add this if using Next.js App Router
+
+import React, { useState, useMemo } from 'react';
+import { CartItemType } from '@/types';
+import { initialCartItems } from '@/types';
+import { CartItemList } from '@/components/cart/lists';
+import { OrderSummary } from '@/components/orderSummary';
+
+ const CartPage = () => {
+  const [cartItems, setCartItems] = useState<CartItemType[]>(initialCartItems);
+
+  // --- State Handlers ---
+  
+  const handleRemoveItem = (id: number) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
+
+  const handleQuantityChange = (id: number, newQuantity: number) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  // --- Memoized Calculations ---
+  
+  const calculations = useMemo(() => {
+    const subtotal = cartItems.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+    // Values from the image
+    const discountPercent = 0.20; 
+    const discount = subtotal * discountPercent;
+    const deliveryFee = 15;
+    const total = subtotal - discount + deliveryFee;
+
+    return { subtotal, discount, deliveryFee, total };
+  }, [cartItems]);
+
+  // --- Render ---
+
   return (
-    <div className='min-h-screen py-8 px-8 mx-auto'>
-       <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/">Home</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Cart</BreadcrumbPage>
-          </BreadcrumbItem>         
-        </BreadcrumbList>
-      </Breadcrumb>
-
-      <div className="py-8 space-y-8 ">
-        <div className="text-5xl font-bold ">
-          YOUR CART
-        </div>
-        <div className="flex flex-col sm:flex-row gap-3 ">
-            {/* Selected Items*/}
-          <div className="w-1/2 border-2 border-gray-200 rounded-2xl  ">
-             <Card 
-              imageSrc={"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=60"}
-              title={'Gradient Graphic T-shirt'}
-              size={'large'}
-              color={'red'}
-              price={25}
-              quantity={1}
-              // onQuantityChange={handleQuantityChange}
-             />
-
+    <div className="bg-gray-50 min-h-screen p-4 sm:p-8 space-y-10">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl font-bold uppercase mb-8">Your Cart</h1>
+        
+        {cartItems.length === 0 ? (
+          <p className="text-center text-gray-500 text-xl bg-white p-12 rounded-lg shadow">
+            Your cart is empty.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-12">
+            <div className="lg:col-span-2">
+              <CartItemList
+                items={cartItems}
+                onRemove={handleRemoveItem}
+                onQuantityChange={handleQuantityChange}
+              />
+            </div>
+            <div className="lg:col-span-1 mt-8 lg:mt-0">
+              <OrderSummary
+                subtotal={calculations.subtotal}
+                discount={calculations.discount}
+                deliveryFee={calculations.deliveryFee}
+                total={calculations.total}
+              />
+            </div>
           </div>
-            {/*Order Summary*/}
-    
-          <div className="w-1/2 border-2 border-gray-200 rounded-2xl ">
-             <div className="div"> Order Summary</div>      
-          </div>
-        </div>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default CartPage

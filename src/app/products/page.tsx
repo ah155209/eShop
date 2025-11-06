@@ -16,6 +16,7 @@ export default function ProductsPage() {
 function ProductsContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams?.get("category") ?? "";
+  const queryParam = searchParams?.get("q")?.trim() ?? "";
 
   const category = useMemo(() => {
     if (!categoryParam) return "All";
@@ -25,19 +26,31 @@ function ProductsContent() {
       .join(" ");
   }, [categoryParam]);
 
-  // Filter products by category if specified, fallback to allProducts
+  // Filter products by category and/or search query
   const filteredProducts = useMemo(() => {
-    if (!categoryParam) return allProducts;
-    const list = getProductsByCategory(categoryParam);
-    return Array.isArray(list) && list.length ? list : allProducts;
-  }, [categoryParam]);
+    let base = allProducts;
+
+    if (categoryParam) {
+      const list = getProductsByCategory(categoryParam);
+      base = Array.isArray(list) && list.length ? list : allProducts;
+    }
+
+    if (queryParam) {
+      const q = queryParam.toLowerCase();
+      base = base.filter((p) =>
+        p.name.toLowerCase().includes(q) || String(p.price).includes(q)
+      );
+    }
+
+    return base;
+  }, [categoryParam, queryParam]);
 
   // limit to 4 items
   const shownProducts = filteredProducts.slice(0, 4);
 
   return (
     <div className="flex flex-col justify-center items-center p-8 sm:p-12 md:p-20">
-      <div className="mb-6 text-lg font-medium">{category}</div>
+      <div className="mb-6 text-lg font-medium">{category}{queryParam ? ` — "${queryParam}"` : ""}</div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 [@media(min-width:1440px)]:grid-cols-5 gap-6 justify-items-center">
         {shownProducts.map((product) => (

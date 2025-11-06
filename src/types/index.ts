@@ -29,6 +29,99 @@ export interface Review {
   date?: string;
 }
 
+export type CartItemType = {
+  id: number;
+  name: string;
+  size: string;
+  color: string;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+};
+
+
+// Categories
+export const categories = [
+  "All",
+  "T-shirts",
+  "Shirts", 
+  "Jeans",
+  "Shorts",
+  "Dresses",
+  "Accessories",
+];
+
+// Brands
+export const brands = [
+  "Shopico",
+  "Nike",
+  "Adidas",
+  "Zara",
+  "H&M",
+  "Uniqlo",
+];
+
+//  Data 
+export const testimonials = [
+  {
+    name: "Sarah M.",
+    text: "I'm blown away by the quality and style of the clothes I received from Shop.co. From casual wear to elegant dresses, every piece I've bought has exceeded my expectations.",
+    rating: 4,
+  },
+  {
+    name: "Alex K.",
+    text: "Finding clothes that align with my personal style used to be a challenge until I discovered Shop.co. The range of options they offer is truly remarkable, catering to a variety of tastes and occasions.",
+    rating: 4,
+  },
+  {
+    name: "James L.",
+    text: "As someone who's always on the lookout for unique fashion pieces, I'm thrilled to have stumbled upon Shop.co. The selection of clothes is not only diverse but also on-point with the latest trends.",
+    rating: 4,
+  },
+  {
+    name: "Clark",
+    text: "Finding clothes that align with my personal style used to be a challenge until I discovered Shop.co. The range of options they offer is truly remarkable, catering to a variety of tastes and occasions.",
+    rating: 4.5,
+  },
+  {
+    name: "James Bond",
+    text: "As someone who's always on the lookout for unique fashion pieces, I'm thrilled to have stumbled upon Shop.co. The selection of clothes is not only diverse but also on-point with the latest trends.",
+    rating: 4,
+  },
+];
+
+export const initialCartItems: CartItemType[] = [
+  {
+    id: 1,
+    name: 'Gradient Graphic T-shirt',
+    size: 'Large',
+    color: 'White',
+    price: 145,
+    quantity: 1,
+    imageUrl: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+  },
+  {
+    id: 2,
+    name: 'Checkered Shirt',
+    size: 'Medium',
+    color: 'Red',
+    price: 180,
+    quantity: 1,
+    imageUrl: 'https://images.unsplash.com/photo-1598032895397-b9472444bf23?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+  },
+  {
+    id: 3,
+    name: 'Skinny Fit Jeans',
+    size: 'Large',
+    color: 'Blue',
+    price: 240,
+    quantity: 1,
+    imageUrl: 'https://images.unsplash.com/photo-1602293589930-4531de37431b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+  },
+];
+
+
+
 // Product Data
 export const products: Product[] = [
   {
@@ -223,53 +316,3 @@ export const getTopSellingProducts = (limit: number = 5): Product[] => {
 export const getDiscountedProducts = (): Product[] => {
   return products.filter(product => product.discount);
 };
-
-// Categories
-export const categories = [
-  "All",
-  "T-shirts",
-  "Shirts", 
-  "Jeans",
-  "Shorts",
-  "Dresses",
-  "Accessories",
-];
-
-// Brands
-export const brands = [
-  "Shopico",
-  "Nike",
-  "Adidas",
-  "Zara",
-  "H&M",
-  "Uniqlo",
-];
-
-
-export const testimonials = [
-  {
-    name: "Sarah M.",
-    text: "I'm blown away by the quality and style of the clothes I received from Shop.co. From casual wear to elegant dresses, every piece I've bought has exceeded my expectations.",
-    rating: 4,
-  },
-  {
-    name: "Alex K.",
-    text: "Finding clothes that align with my personal style used to be a challenge until I discovered Shop.co. The range of options they offer is truly remarkable, catering to a variety of tastes and occasions.",
-    rating: 4,
-  },
-  {
-    name: "James L.",
-    text: "As someone who's always on the lookout for unique fashion pieces, I'm thrilled to have stumbled upon Shop.co. The selection of clothes is not only diverse but also on-point with the latest trends.",
-    rating: 4,
-  },
-  {
-    name: "Clark",
-    text: "Finding clothes that align with my personal style used to be a challenge until I discovered Shop.co. The range of options they offer is truly remarkable, catering to a variety of tastes and occasions.",
-    rating: 4.5,
-  },
-  {
-    name: "James Bond",
-    text: "As someone who's always on the lookout for unique fashion pieces, I'm thrilled to have stumbled upon Shop.co. The selection of clothes is not only diverse but also on-point with the latest trends.",
-    rating: 4,
-  },
-];
